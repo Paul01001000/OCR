@@ -16,10 +16,10 @@ for img_name in listdir(img_folder):
     img_path = img_folder + img_name
     img = cv2.imread(img_path)
 
-    text_ = reader.readtext(img)
+    detected = reader.readtext(img)
 
     # draw bbox and text
-    for _, t in enumerate(text_):
+    for _, t in enumerate(detected):
         print(t)
 
         bbox, text, score = t
