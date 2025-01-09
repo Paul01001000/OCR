@@ -5,11 +5,19 @@ import numpy as np
 
 from os import listdir
 
-def detect_text(img, reader):
-    # detect text on image
+# read image
+img_folder = "C:/Users/paul8/Pictures/2023-12-20/"
+
+# instance text detector
+reader = easyocr.Reader(['en'], gpu=False)
+threshold = 0.5
+
+for img_name in listdir(img_folder):
+    img_path = img_folder + img_name
+    img = cv2.imread(img_path)
+
     text_ = reader.readtext(img)
 
-    threshold = 0.5
     # draw bbox and text
     for _, t in enumerate(text_):
         print(t)
@@ -22,17 +30,5 @@ def detect_text(img, reader):
 
     plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     plt.show()
-
-# read image
-img_folder = "C:/Users/paul8/Pictures/2023-12-20/"
-
-# instance text detector
-reader = easyocr.Reader(['en'], gpu=False)
-
-for img_name in listdir(img_folder):
-    img_path = img_folder + img_name
-    img = cv2.imread(img_path)
-
-    detect_text(img,reader)
 
     
