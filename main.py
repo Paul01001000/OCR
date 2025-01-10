@@ -9,7 +9,7 @@ from os import listdir
 img_folder = "C:/Users/paul8/Pictures/2023-12-20/"
 
 # instance text detector
-reader = easyocr.Reader(['en','ko'], gpu=False)
+reader = easyocr.Reader(['en'], gpu=False)
 threshold = 0.5
 
 for img_name in listdir(img_folder):
