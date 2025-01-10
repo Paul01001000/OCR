@@ -9,7 +9,7 @@ from os import listdir
 img_folder = "C:/Users/paul8/Pictures/2023-12-20/"
 
 # instance text detector
-reader = easyocr.Reader(['en'], gpu=False)
+reader = easyocr.Reader(['en','ko'], gpu=False)
 threshold = 0.5
 
 for img_name in listdir(img_folder):
@@ -21,9 +21,10 @@ for img_name in listdir(img_folder):
     # draw bbox and text
     for _, t in enumerate(detected):
         print(t)
-
-        bbox, text, score = t
-
+        try:
+            bbox, text, score = t
+        except ValueError:
+            continue
         if score > threshold:
             cv2.rectangle(img, bbox[0], bbox[2], (0, 255, 0), 5)
             cv2.putText(img, text, bbox[0], cv2.FONT_HERSHEY_COMPLEX, 0.65, (255, 0, 0), 2)
