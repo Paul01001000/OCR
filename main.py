@@ -6,16 +6,20 @@ import numpy as np
 from os import listdir
 
 # read image
-img_folder = "C:/Users/paul8/Pictures/2023-12-20/"
+root = "C:/Users/paul8/Documents/Uni/7. Thesis/Image Processing/OCR/"
+folders = ["English/","German/","Korean/"]
+lang_list = [['en','de'],['de','en'],['ko','en']]
+cur = 0
+img_folder = root + folders[cur]
 
 # instance text detector
-reader = easyocr.Reader(['en'], gpu=False)
+reader = easyocr.Reader(lang_list[cur], gpu=False)
 threshold = 0.5
 
 for img_name in listdir(img_folder):
     img_path = img_folder + img_name
+    print(img_path)
     img = cv2.imread(img_path)
-
     detected = reader.readtext(img)
 
     # draw bbox and text
@@ -26,10 +30,14 @@ for img_name in listdir(img_folder):
         except ValueError:
             continue
         if score > threshold:
-            cv2.rectangle(img, bbox[0], bbox[2], (0, 255, 0), 5)
-            cv2.putText(img, text, bbox[0], cv2.FONT_HERSHEY_COMPLEX, 0.65, (255, 0, 0), 2)
+            pt1,pt2 = list(map(int,bbox[0])),list(map(int,bbox[2]))
+
+            cv2.rectangle(img, pt1, pt2, (0, 255, 0), 1)
+            if cur != 2:
+                cv2.putText(img, text, pt1, cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 0, 0), 1)
 
     plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     plt.show()
+    cv2.imwrite(img_path + "-out.png",img)
 
     
