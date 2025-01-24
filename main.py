@@ -9,7 +9,7 @@ from os import listdir
 root = "C:/Users/paul8/Documents/Uni/7. Thesis/Image Processing/OCR/"
 folders = ["English","German","Korean"]
 lang_list = [['en','de'],['de','en'],['ko','en']]
-cur = 1
+cur = 2
 img_folder = root + folders[cur]
 
 # instance text detector
@@ -43,6 +43,5 @@ for img_name in listdir(img_folder):
     plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     plt.show()
     cv2.imwrite(root + folders[cur] + "-out/" + img_name + "-out.png", img)
-    break
 
     
